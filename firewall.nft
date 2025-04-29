@@ -1,0 +1,10 @@
+table ip filter {
+    chain forward {
+        type filter hook input priority 0; policy drop;
+
+        ip protocol tcp saddress 10.12.0.0/24 act state new reject
+        ip protocol tcp saddress 10.2.0.0/24 act state new reject
+        ip protocol tcp saddress 10.1.0.0/24 accept
+        ip protocol tcp daddress 10.1.0.0/24 act state established accept
+}
+
