@@ -1,7 +1,7 @@
 from scapy.all import *
 
 target_ip   = '10.1.0.3'
-target_mac  = '62:fb:d9:5e:2b:98' #Changes on each reboot
+target_mac  = '0a:f7:e7:25:5c:2c' #Changes on each reboot
 defgw_ip    = '10.1.0.1'
 
 #Send ARP packet saying that the MAC Address correspondent of the default gateway is the attacker's
