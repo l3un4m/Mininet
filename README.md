@@ -12,9 +12,8 @@ As we can see, a DNS request is being sent with a spoofed IP of WS2(when in real
 
 ## ARP Poisoning
 ### Attack
-For this attack we use a simple scapy command to perform the arp poisoning.
-```
-sendp(Ether(dst='TARGET-MAC')/ARP(op="who-has", psrc='DEF\_GATEWAY-IP', pdst='TARGET-IP'), inter=0.2, loop=1)
-```
-This command will tell our target to change the MAC Address of it's default gateway to our own MAC address, this way all the traffic coming from our target will reach us and then be forwarded to it's original destination.
+For this attack we use a simple scapy command to perform the arp poisoning
+![arp1](/screenshots/arp1.jpg)
+As we can see we use the **WS3**'s IP and MAC Addresses and **R1**'s(DefaultGateway) IP Address. We can see a before and after *Arp Table* of **WS3** and confirm that our attack was successful. Furthermore, if we analyse the following capture we can see that a ping from **WS3** to **DNS** passes by **WS2**.
+![arp2](/screenshots/arp2.jpg)
 ### Defense
