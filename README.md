@@ -16,4 +16,5 @@ For this attack we use a simple scapy command to perform the arp poisoning
 ![arp1](/screenshots/arp1.jpg)
 As we can see we use the **WS3**'s IP and MAC Addresses and **R1**'s(DefaultGateway) IP Address. We can see a before and after *Arp Table* of **WS3** and confirm that our attack was successful. Furthermore, if we analyse the following capture we can see that a ping from **WS3** to **DNS** passes by **WS2**.
 ![arp2](/screenshots/arp2.jpg)
+**NOTE:** We use *inter=0.2, loop=1* to tell scapy to keep sending these packets every 0.2 seconds because if **R1** sends traffic to **WS3** the DefaultGateway MAC address will be corrected. Also after 60 seconds (in this system) the *Arp Table*'s cache is cleared and if that happens then our attack stops working.
 ### Defense
