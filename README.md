@@ -9,7 +9,7 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ```
 [Attacker] python3 attack/dns.py [Victim's IP] [DNS IP] [Open Port in Victim]
 ```
-![dns](/screenshots/dns.jpg)
+![dns](/screenshots/dns1.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
 
@@ -25,3 +25,8 @@ We start by finding the MAC Address of our victim **WS3** and using it in our sc
 ![arp2](/screenshots/arp2.jpg)
 **NOTE:** We use *inter=0.2, loop=1* to tell scapy to keep sending these packets every 0.2 seconds because if **R1** sends traffic to **WS3** the DefaultGateway MAC address will be corrected. Also after 60 seconds (in this system) the *Arp Table*'s cache is cleared and if that happens then our attack stops working.
 ### Defense
+
+## Network Mapping
+### Attack
+For this attack by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
+![scan](/screenshots/scan.jpg)
