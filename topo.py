@@ -22,6 +22,10 @@ class TopoSecu(Topo):
     Custom Mininet topology
     """
 
+    def __init_(self, apply_config=True):
+        self.apply_config = apply_config
+        Topo.__init__(self)
+
     def build(self):
 
         # Add 2 routers in two different subnets
@@ -69,7 +73,16 @@ def add_routes(net):
     info(net['r2'].cmd("ip route add 10.1.0.0/24 via 10.12.0.1 dev r2-eth12"))
 
 
-def start_services(net: Mininet) -> None:
+def firewall(net, host, rules):
+    """
+    Applying Firewalls
+    """
+    if os.path.exists(rules):
+        info(f"Applying {rules} in {host}\n")
+        net[host.name].cmd(f'nft -f {rules}')
+    else:
+        info(f"{rules} not found!\n")
+def start_services(net: Mininet, apply_config: bool) -> None:
     """
     Start services on servers.
     :param net: Mininet network
@@ -88,6 +101,15 @@ def start_services(net: Mininet) -> None:
     for host in ['http', 'ntp', 'ftp']:
         info(net[host].cmd(cmd))
 
+        #Firewall
+        if apply_config:
+            hosts_fw = {
+            'r1': '/home/mininet/firewall/r1.nft',
+            'r2': '/home/mininet/firewall/r2.nft'
+            }
+            for host, rules in hosts_fw.items():
+                firewall(net, net[host], rules)
+
 
 def stop_services(net: Mininet) -> None:
     """
@@ -104,14 +126,14 @@ def stop_services(net: Mininet) -> None:
     info(net['ftp'].cmd("killall vsftpd"))
 
 
-def run():
-    topo = TopoSecu()
+def run(apply_config=True):
+    topo = TopoSecu(apply_config=apply_config)
     net = Mininet(topo=topo)
 
     add_routes(net)
     stop_services(net)
     time.sleep(1)
-    start_services(net)
+    start_services(net, apply_config)
 
     net.start()
     CLI(net)
@@ -119,13 +141,13 @@ def run():
     net.stop()
 
 
-def ping_all():
-    topo = TopoSecu()
+def ping_all(apply_config=True):
+    topo = TopoSecu(apply_config=apply_config)
     net = Mininet(topo=topo)
 
     add_routes(net)
     stop_services(net)
-    start_services(net)
+    start_services(net, apply_config)
 
     net.start()
     net.pingAll()
@@ -150,8 +172,8 @@ if __name__ == '__main__':
 
     if args.pingall:
         # Deploy topology, run pingall test, then exit
-        ping_all()
+        ping_all(args.apply_config)
     else:
         # Deploy topology, open CLI
-        run()
+        run(args.apply_config)
 
