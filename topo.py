@@ -22,7 +22,7 @@ class TopoSecu(Topo):
     Custom Mininet topology
     """
 
-    def __init_(self, apply_config=True):
+    def __init__(self, apply_config=True):
         self.apply_config = apply_config
         Topo.__init__(self)
 
@@ -104,8 +104,8 @@ def start_services(net: Mininet, apply_config: bool) -> None:
         #Firewall
         if apply_config:
             hosts_fw = {
-            'r1': '/home/mininet/firewall/r1.nft',
-            'r2': '/home/mininet/firewall/r2.nft'
+            'r1': '/home/student-linfo2347/comp-sec2/firewall/r1.nft',
+            'r2': '/home/student-linfo2347/comp-sec2/firewall/r2.nft',
             }
             for host, rules in hosts_fw.items():
                 firewall(net, net[host], rules)
@@ -164,6 +164,7 @@ if __name__ == '__main__':
     )
     # Optional flag -p
     parser.add_argument("-p", "--pingall", action="store_true", help="Perform pingall test")
+    parser.add_argument("-no-config", "--no-config", action="store_false", dest="apply_config", default=True, help="Disable applying nftables config")
     # Parse arguments
     args = parser.parse_args()
 

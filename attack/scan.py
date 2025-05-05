@@ -8,6 +8,7 @@ args = parser.parse_args()
 
 network = args.network
 
+print("Scanning Network for Devices...")
 # Generate all host IPs from CIDR
 hosts = [str(ip) for ip in ipaddress.IPv4Network(network, strict=False).hosts()]
 
@@ -25,7 +26,7 @@ for ip in up_hosts:
 
 # TCP SYN scan each host that is UP(common ports 1–1024)
 for ip in up_hosts:
-    print(f"Scanning for open ports on {ip}")
+    print(f"Scanning for open ports on {ip}...")
     res, unans = sr(IP(dst=ip)/TCP(dport=(1,1024), flags='S'), timeout=1, verbose=0)
 
     for sent, received in res:
