@@ -35,4 +35,10 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we
 
 ## SYN Flooding
 ### Attack
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/flood.py) we simply flood a victim with SYN packets coming from spoofed IP's preventing new connections to be established to the victim.
+![scan](/screenshots/flood1.jpg)
+Here we can see all the spoofed SYN's and SYN-ACK's being sent.
+![scan](/screenshots/flood2.jpg)
+Here we see the amount of SYN\_RECV's on the **http** server.
+
 

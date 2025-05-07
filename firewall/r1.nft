@@ -2,11 +2,11 @@ table ip filter {
     chain forward {
         type filter hook forward priority 0; policy drop;
 
-        #Accept ongoing traffic
-        ct state established, related accept
-
         #Let the workstations start any connection
         ip saddr 10.1.0.0/24 accept
+
+        #Accept ongoing traffic
+        ct state established, related accept
     }
 }
 
