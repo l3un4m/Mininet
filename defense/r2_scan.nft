@@ -1,0 +1,20 @@
+table ip filter {
+    chain forward {
+        type filter hook forward priority 0; policy accept;
+
+        # ICMP echo (ping) scan rate-limit
+        ip protocol icmp icmp type echo-request limit rate 2/second accept
+        ip protocol icmp icmp type echo-request drop
+
+        # TCP SYN scan protection
+        tcp flags syn limit rate 10/second accept
+        tcp flags syn drop
+
+        #Accept ongoing traffic
+        ip saddr 10.1.0.0/24 accept
+        ip saddr 10.2.0.0/24 ip daddr 10.12.0.0/24 ct state new accept
+        ip saddr 10.12.0.0/24 ct state new drop
+        ct state established, related accept
+    }
+}
+
