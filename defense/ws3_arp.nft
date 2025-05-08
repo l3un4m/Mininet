@@ -1,0 +1,9 @@
+table netdev arp_protect {
+    chain arp_filter {
+        type filter hook ingress device eth0 priority 0;
+        # Allow ARP requests and replies (optional: only replies we expect)
+        arp op request accept
+        arp op reply accept
+        drop
+    }
+}

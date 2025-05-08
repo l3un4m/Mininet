@@ -32,6 +32,9 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we
 ![scan](/screenshots/scan1.jpg)
 
 ### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table to limit the rate of accepted **SYN** packets to **10 per second** and **icmp** to **2 per second** preventing both types of scanning.
+As we can see, when we run the same attack this time it can't see any of our hosts:
+![scan](/screenshots/scan_def.jpg)
 
 ## SYN Flooding
 ### Attack
@@ -41,4 +44,9 @@ Here we can see all the spoofed SYN's and SYN-ACK's being sent.
 ![scan](/screenshots/flood2.jpg)
 Here we see the amount of SYN\_RECV's on the **http** server.
 
+<<<<<<< HEAD
+=======
+### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/flood.sh) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 15 per second.
+>>>>>>> 977b115 (Attacks: Complete SSH)
 
