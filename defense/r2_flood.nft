@@ -7,7 +7,9 @@ table ip filter {
         ct state established, related accept
 
         # SYN flood protection - limit SYNs per source IP
-        tcp flags syn ct state new limit rate 5/second per ip saddr accept
+
+        tcp flags syn ct state new limit rate 5/second counter accept
+        tcp flags syn ct state new log prefix "SYN_DROP: " counter drop
         tcp flags syn ct state new drop
         # Trusted LAN access
         ip saddr 10.1.0.0/24 accept

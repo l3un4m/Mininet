@@ -44,9 +44,10 @@ Here we can see all the spoofed SYN's and SYN-ACK's being sent.
 ![scan](/screenshots/flood2.jpg)
 Here we see the amount of SYN\_RECV's on the **http** server.
 
-<<<<<<< HEAD
-=======
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/flood.sh) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 15 per second.
->>>>>>> 977b115 (Attacks: Complete SSH)
-
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second. We can see in the next figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition we changed the default wait time of ~60 seconds
+to free up SYN\_RECV entries to ~6-10 seconds with the command:
+```
+[Victim Host] sysctl -w net.ipv4.tcp_synack_retries=2
+```
+This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
