@@ -25,6 +25,9 @@ We start by finding the MAC Address of our victim **WS3** and using it in our sc
 ![arp2](/screenshots/arp2.jpg)
 **NOTE:** We use *inter=0.2, loop=1* to tell scapy to keep sending these packets every 0.2 seconds because if **R1** sends traffic to **WS3** the DefaultGateway MAC address will be corrected. Also after 60 seconds (in this system) the *Arp Table*'s cache is cleared and if that happens then our attack stops working.
 ### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/arp.sh) we simply use *arptables* to create a rule that will drop any arp packets that come from an IP source that doesn't match it's MAC Address, in this example **WS2** was pretending to be **R1** but the MAC Address was still **WS2's** so it's blocked.
+![arp2](/screenshots/arp_def.jpg)
+As we can see the arp table of the victim remais unchanged.
 
 ## Network Scan
 ### Attack
@@ -44,9 +47,10 @@ Here we can see all the spoofed SYN's and SYN-ACK's being sent.
 ![scan](/screenshots/flood2.jpg)
 Here we see the amount of SYN\_RECV's on the **http** server.
 
-<<<<<<< HEAD
-=======
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/flood.sh) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 15 per second.
->>>>>>> 977b115 (Attacks: Complete SSH)
-
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second. We can see in the next figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition we changed the default wait time of ~60 seconds
+to free up SYN\_RECV entries to ~6-10 seconds with the command:
+```
+[Victim Host] sysctl -w net.ipv4.tcp_synack_retries=2
+```
+This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
