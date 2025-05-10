@@ -25,6 +25,9 @@ We start by finding the MAC Address of our victim **WS3** and using it in our sc
 ![arp2](/screenshots/arp2.jpg)
 **NOTE:** We use *inter=0.2, loop=1* to tell scapy to keep sending these packets every 0.2 seconds because if **R1** sends traffic to **WS3** the DefaultGateway MAC address will be corrected. Also after 60 seconds (in this system) the *Arp Table*'s cache is cleared and if that happens then our attack stops working.
 ### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/arp.sh) we simply use *arptables* to create a rule that will drop any arp packets that come from an IP source that doesn't match it's MAC Address, in this example **WS2** was pretending to be **R1** but the MAC Address was still **WS2's** so it's blocked.
+![arp2](/screenshots/arp_def.jpg)
+As we can see the arp table of the victim remais unchanged.
 
 ## Network Scan
 ### Attack
