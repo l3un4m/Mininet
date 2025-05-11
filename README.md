@@ -9,7 +9,7 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ```
 [Attacker] python3 attack/dns.py [Victim's IP] [DNS IP] [Open Port in Victim]
 ```
-![dns](/screenshots/dns1.jpg)
+![dns](/screenshots/dns.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/dns.nft) we created a *nft script* that will allow legitimate DNS traffic and block all the rest that would be spoofed traffic.
