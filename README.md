@@ -1,7 +1,7 @@
 # Mininet
 ## Firewalls
-For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/comp-sec2/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/comp-sec2/blob/main/firewall/r2.nft) with a **drop policy** that resulted in the following *pingall*
-![a](/screenshots/pingall.png)
+For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** that resulted in the following *pingall*
+![a](/screenshots/pingall.jpg)
 
 ## DNS Reflection
 ### Attack
@@ -12,6 +12,9 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ![dns](/screenshots/dns1.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/dns.nft) we created a *nft script* that will allow legitimate DNS traffic and block all the rest that would be spoofed traffic.
+![dns\_def](/screenshots/dns_def.jpg)
+As we can see in the traffic capture we only have DNS Queries, opposed to the previous capture, meaning that our victim's are protected.
 
 ## ARP Poisoning
 ### Attack

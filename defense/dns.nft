@@ -1,0 +1,13 @@
+table ip filter {
+    chain output {
+        type filter hook output priority 0;
+        policy accept;
+
+        # Allow established replies to legitimate requests
+        ct state established, related accept
+
+        # Drop all other DNS replies, likely spoofed
+        udp dport 5353 drop
+    }
+}
+
