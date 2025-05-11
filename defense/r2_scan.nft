@@ -3,7 +3,7 @@ table ip filter {
         type filter hook forward priority 0; policy accept;
 
         # ICMP echo (ping) scan rate-limit
-        ip protocol icmp icmp type echo-request limit rate 2/second accept
+        ip protocol icmp icmp type echo-request limit rate 10/second accept
         ip protocol icmp icmp type echo-request drop
 
         # TCP SYN scan protection
