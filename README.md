@@ -1,5 +1,9 @@
 # Mininet
-**Note:** For an easier reading of the report it's advised to access https://github.com/l3un4m/Mininet. No code is shown in the report, only it's explanation and results. Every section and subsection has an hyperlink to the files in question. Additionally there are provided scripts that mimick an attempt of each attack implemented, these can be used to compare what happens before and after implementing the defenses.
+**Note:** For an easier reading of the report it's advised to access https://github.com/l3un4m/Mininet. No code is shown in the report, only it's explanation and results. Every section and subsection has an hyperlink to the files in question.
+Additionally there are provided scripts that mimick an attempt of each attack implemented, these can be used to compare what happens before and after implementing the defenses. To run them simply do:
+```
+source examples/[desired_attack].sh
+```
 ## Firewalls
 For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** for **R1** and an **accept policy** for **R2** that resulted in the following *pingall*:
 
@@ -40,7 +44,7 @@ For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/arp.sh
 ```
 As we can see the arp table of the victim remais unchanged.
 
-![arp2](/screenshots/arp_def.jpg)
+![arp3](/screenshots/arp_def.jpg)
 
 ## Network Scan
 ### Attack
@@ -59,7 +63,7 @@ r2 nft -f defense/r2_scan.nft
 ```
 As we can see, when we run the same attack this time it can't see any of our hosts:
 
-![scan](/screenshots/scan_def.jpg)
+![scan2](/screenshots/scan_def.jpg)
 
 ## SYN Flooding
 ### Attack
@@ -67,10 +71,10 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/flood.py) w
 
 Here we can see all the spoofed SYN's and SYN-ACK's being sent:
 
-![scan](/screenshots/flood1.jpg)
+![flood](/screenshots/flood1.jpg)
 Here we see the amount of SYN\_RECV's on the **http** server:
 
-![scan](/screenshots/flood2.jpg)
+![flood2](/screenshots/flood2.jpg)
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second.
@@ -79,10 +83,22 @@ r2 flush ruleset
 r2 nft -f defense/r2_flood.nft
 ```
 
-![arp2](/screenshots/flood_def.jpg)
+![flood3](/screenshots/flood_def.jpg)
 We can see in the previous figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition we changed the default wait time of ~60 seconds
 to free up SYN\_RECV entries to ~6-10 seconds with the command:
 ```
 [Victim Host] sysctl -w net.ipv4.tcp_synack_retries=2
 ```
 This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
+## SSH Brute-Force
+### Attack
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) we created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
+![brute](/screenshots/brute.jpg)
+Due to performance issues we couldn't achieve the correct answer but the script seems to be working as it should.
+
+### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_brute.nft) we simply redo **R2**'s firewall rules to include a threshold of 5 New SSH packets per second slowing down our opponent drastically enough to make the attack unfeasable.
+```
+r2 flush ruleset
+r2 nft -f defense/r2_brute.nft
+```

