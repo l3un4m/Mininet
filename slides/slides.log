@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.12)  12 MAY 2025 14:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.12)  12 MAY 2025 21:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1061,86 +1061,86 @@ Overfull \vbox (47.30656pt too high) detected at line 17
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<media/dns_attack.jpg, id=22, 152.2488pt x 79.2561pt>
-File: media/dns_attack.jpg Graphic file (type jpg)
-<use media/dns_attack.jpg>
-Package pdftex.def Info: media/dns_attack.jpg  used on input line 50.
-(pdftex.def)             Requested size: 153.64493pt x 79.98997pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
+<media/scan_attack.jpg, id=22, 586.19pt x 409.53pt>
+File: media/scan_attack.jpg Graphic file (type jpg)
+<use media/scan_attack.jpg>
+Package pdftex.def Info: media/scan_attack.jpg  used on input line 49.
+(pdftex.def)             Requested size: 122.9164pt x 85.8726pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 50.
+ut line 49.
 
 (/usr/share/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-<media/dns_defense.jpg, id=23, 152.2488pt x 79.2561pt>
-File: media/dns_defense.jpg Graphic file (type jpg)
-<use media/dns_defense.jpg>
-Package pdftex.def Info: media/dns_defense.jpg  used on input line 50.
-(pdftex.def)             Requested size: 153.64493pt x 79.98997pt.
+<media/scan_defense.jpg, id=23, 582.175pt x 366.36874pt>
+File: media/scan_defense.jpg Graphic file (type jpg)
+<use media/scan_defense.jpg>
+Package pdftex.def Info: media/scan_defense.jpg  used on input line 49.
+(pdftex.def)             Requested size: 122.9164pt x 77.3478pt.
 
 
 [2
 
- <./media/dns_attack.jpg> <./media/dns_defense.jpg>]
-<media/arp_attack.jpg, id=31, 586.19pt x 415.5525pt>
-File: media/arp_attack.jpg Graphic file (type jpg)
-<use media/arp_attack.jpg>
-Package pdftex.def Info: media/arp_attack.jpg  used on input line 83.
-(pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
-<media/arp_defense.jpg, id=32, 586.19pt x 415.5525pt>
-File: media/arp_defense.jpg Graphic file (type jpg)
-<use media/arp_defense.jpg>
-Package pdftex.def Info: media/arp_defense.jpg  used on input line 83.
-(pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
-
-Overfull \vbox (8.66394pt too high) detected at line 83
- []
-
+ <./media/scan_attack.jpg> <./media/scan_defense.jpg>]
+<media/dns_attack.jpg, id=31, 152.2488pt x 79.2561pt>
+File: media/dns_attack.jpg Graphic file (type jpg)
+<use media/dns_attack.jpg>
+Package pdftex.def Info: media/dns_attack.jpg  used on input line 81.
+(pdftex.def)             Requested size: 153.64493pt x 79.98997pt.
+<media/dns_defense.jpg, id=32, 152.2488pt x 79.2561pt>
+File: media/dns_defense.jpg Graphic file (type jpg)
+<use media/dns_defense.jpg>
+Package pdftex.def Info: media/dns_defense.jpg  used on input line 81.
+(pdftex.def)             Requested size: 153.64493pt x 79.98997pt.
 
 
 [3
 
- <./media/arp_attack.jpg> <./media/arp_defense.jpg>]
-<media/scan_attack.jpg, id=38, 586.19pt x 409.53pt>
-File: media/scan_attack.jpg Graphic file (type jpg)
-<use media/scan_attack.jpg>
-Package pdftex.def Info: media/scan_attack.jpg  used on input line 114.
-(pdftex.def)             Requested size: 122.9164pt x 85.8726pt.
-<media/scan_defense.jpg, id=39, 582.175pt x 366.36874pt>
-File: media/scan_defense.jpg Graphic file (type jpg)
-<use media/scan_defense.jpg>
-Package pdftex.def Info: media/scan_defense.jpg  used on input line 114.
-(pdftex.def)             Requested size: 122.9164pt x 77.3478pt.
+ <./media/dns_attack.jpg> <./media/dns_defense.jpg>]
+<media/arp_attack.jpg, id=38, 586.19pt x 415.5525pt>
+File: media/arp_attack.jpg Graphic file (type jpg)
+<use media/arp_attack.jpg>
+Package pdftex.def Info: media/arp_attack.jpg  used on input line 114.
+(pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
+<media/arp_defense.jpg, id=39, 586.19pt x 415.5525pt>
+File: media/arp_defense.jpg Graphic file (type jpg)
+<use media/arp_defense.jpg>
+Package pdftex.def Info: media/arp_defense.jpg  used on input line 114.
+(pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
+
+Overfull \vbox (8.66394pt too high) detected at line 114
+ []
+
 
 
 [4
 
- <./media/scan_attack.jpg> <./media/scan_defense.jpg>]
+ <./media/arp_attack.jpg> <./media/arp_defense.jpg>]
 <media/flood_attack.jpg, id=45, 416.55624pt x 293.095pt>
 File: media/flood_attack.jpg Graphic file (type jpg)
 <use media/flood_attack.jpg>
-Package pdftex.def Info: media/flood_attack.jpg  used on input line 147.
+Package pdftex.def Info: media/flood_attack.jpg  used on input line 148.
 (pdftex.def)             Requested size: 122.9164pt x 86.48462pt.
 <media/flood_defense.jpg, id=46, 409.53pt x 293.095pt>
 File: media/flood_defense.jpg Graphic file (type jpg)
 <use media/flood_defense.jpg>
-Package pdftex.def Info: media/flood_defense.jpg  used on input line 147.
+Package pdftex.def Info: media/flood_defense.jpg  used on input line 148.
 (pdftex.def)             Requested size: 122.9164pt x 87.96942pt.
 
-Overfull \vbox (9.49792pt too high) detected at line 147
+Overfull \vbox (9.49792pt too high) detected at line 148
  []
 
 
@@ -1148,6 +1148,21 @@ Overfull \vbox (9.49792pt too high) detected at line 147
 [5
 
  <./media/flood_attack.jpg> <./media/flood_defense.jpg>]
+<media/brute_attack.jpg, id=52, 415.5525pt x 210.7875pt>
+File: media/brute_attack.jpg Graphic file (type jpg)
+<use media/brute_attack.jpg>
+Package pdftex.def Info: media/brute_attack.jpg  used on input line 180.
+(pdftex.def)             Requested size: 122.9164pt x 62.34901pt.
+<media/brute_defense.jpg, id=53, 406.51875pt x 293.095pt>
+File: media/brute_defense.jpg Graphic file (type jpg)
+<use media/brute_defense.jpg>
+Package pdftex.def Info: media/brute_defense.jpg  used on input line 180.
+(pdftex.def)             Requested size: 122.9164pt x 88.61789pt.
+
+
+[6
+
+ <./media/brute_attack.jpg> <./media/brute_defense.jpg>]
 \tf@nav=\write6
 \openout6 = `slides.nav'.
 
@@ -1166,10 +1181,10 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 25594 strings out of 475171
- 508522 string characters out of 5767103
+ 25616 strings out of 475171
+ 509056 string characters out of 5767103
  870401 words of memory out of 5000000
- 48068 multiletter control sequences out of 15000+600000
+ 48088 multiletter control sequences out of 15000+600000
  567093 words of font info for 65 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,13n,123p,1873b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1178,10 +1193,10 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ssbx10.pfb>
-Output written on slides.pdf (5 pages, 440214 bytes).
+Output written on slides.pdf (6 pages, 485175 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 46 compressed objects within 1 object stream
- 11 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 86 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
+ 13 named destinations out of 1000 (max. 500000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 
