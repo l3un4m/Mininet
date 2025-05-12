@@ -91,6 +91,7 @@ to free up SYN\_RECV entries to ~6-10 seconds with the command:
 ```
 This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
 ## SSH Brute-Force
+**Note:** For this attack we need to download a wordlist but Inginious didn't accept a zip with it because it'd be too big so for simplicity reasons just clone and unzip the following repo: https://github.com/dw0rsec/rockyou.txt.git and add it to the home folder of mininet.
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) we created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
 
