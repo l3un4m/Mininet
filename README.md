@@ -2,6 +2,7 @@
 **Note:** For an easier reading of the report it's advised to access https://github.com/l3un4m/Mininet. No code is shown in the report, only it's explanation and results. Every section and subsection has an hyperlink to the files in question. Additionally there are provided scripts that mimick an attempt of each attack implemented, these can be used to compare what happens before and after implementing the defenses.
 ## Firewalls
 For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** for **R1** and an **accept policy** for **R2** that resulted in the following *pingall*:
+
 ![a](/screenshots/pingall.jpg)
 
 ## DNS Reflection
@@ -13,7 +14,11 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ![dns](/screenshots/dns.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/dns.nft) we created a *nft script* that will allow legitimate DNS traffic and block all the rest that would be spoofed traffic.
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/dns.nft) we created an *nft script* that will allow legitimate DNS traffic and block all the rest that would be spoofed traffic, to install it we use:
+```
+dns nft -f defense/dns.nft
+```
+
 ![dns\_def](/screenshots/dns_def.jpg)
 As we can see in the traffic capture we only have DNS Queries, opposed to the previous capture, meaning that our victim's are protected.
 
@@ -30,17 +35,28 @@ We start by finding the MAC Address of our victim **WS3** and using it in our sc
 **NOTE:** We use *inter=0.2, loop=1* to tell scapy to keep sending these packets every 0.2 seconds because if **R1** sends traffic to **WS3** the DefaultGateway MAC address will be corrected. Also after 60 seconds (in this system) the *Arp Table*'s cache is cleared and if that happens then our attack stops working.
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/arp.sh) we simply use *arptables* to create a rule that will drop any arp packets that come from an IP source that doesn't match it's MAC Address, in this example **WS2** was pretending to be **R1** but the MAC Address was still **WS2's** so it's blocked.
-![arp2](/screenshots/arp_def.jpg)
+```
+[Victim] source defense/arp.sh [Default Gateway's IP]
+```
 As we can see the arp table of the victim remais unchanged.
+
+![arp2](/screenshots/arp_def.jpg)
 
 ## Network Scan
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we start by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
+```
+[Attacker] python3 attack/scan.py [Victim Subdomain]
+```
 
 ![scan](/screenshots/scan1.jpg)
 
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table to limit the rate of accepted **SYN** packets to **10 per second** and **icmp** to **2 per second** preventing both types of scanning.
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table of **R2** to limit the rate of accepted **SYN** packets to **2 per second** and **icmp** to **2 per second** preventing both types of scanning.
+```
+r2 flush ruleset
+r2 nft -f defense/r2_scan.nft
+```
 As we can see, when we run the same attack this time it can't see any of our hosts:
 
 ![scan](/screenshots/scan_def.jpg)
@@ -48,15 +64,21 @@ As we can see, when we run the same attack this time it can't see any of our hos
 ## SYN Flooding
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/flood.py) we simply flood a victim with SYN packets coming from spoofed IP's preventing new connections to be established to the victim.
-Here we can see all the spoofed SYN's and SYN-ACK's being sent.
+
+Here we can see all the spoofed SYN's and SYN-ACK's being sent:
 
 ![scan](/screenshots/flood1.jpg)
-Here we see the amount of SYN\_RECV's on the **http** server.
+Here we see the amount of SYN\_RECV's on the **http** server:
 
 ![scan](/screenshots/flood2.jpg)
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second.
+```
+r2 flush ruleset
+r2 nft -f defense/r2_flood.nft
+```
+
 ![arp2](/screenshots/flood_def.jpg)
 We can see in the previous figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition we changed the default wait time of ~60 seconds
 to free up SYN\_RECV entries to ~6-10 seconds with the command:
