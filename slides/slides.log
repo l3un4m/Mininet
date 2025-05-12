@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.12)  11 MAY 2025 23:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.3.12)  12 MAY 2025 14:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -893,8 +893,7 @@ Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count373
 \l__pdf_internal_box=\box129
-)
-No file slides.aux.
+) (./slides.aux)
 \openout1 = `slides.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
@@ -972,6 +971,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring OFF on input line 15.
+ (./slides.out)
+(./slides.out)
 \@outlinefile=\write5
 \openout5 = `slides.out'.
 
@@ -1051,9 +1052,7 @@ Dictionary: translator-numbers-dictionary, Language: English
 (/usr/share/texmf-dist/tex/latex/translator/translator-theorem-dictionary-Engli
 sh.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-)
-No file slides.nav.
-
+) (./slides.nav)
 Overfull \vbox (47.30656pt too high) detected at line 17
  []
 
@@ -1099,13 +1098,17 @@ Package pdftex.def Info: media/dns_defense.jpg  used on input line 50.
 <media/arp_attack.jpg, id=31, 586.19pt x 415.5525pt>
 File: media/arp_attack.jpg Graphic file (type jpg)
 <use media/arp_attack.jpg>
-Package pdftex.def Info: media/arp_attack.jpg  used on input line 82.
+Package pdftex.def Info: media/arp_attack.jpg  used on input line 83.
 (pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
 <media/arp_defense.jpg, id=32, 586.19pt x 415.5525pt>
 File: media/arp_defense.jpg Graphic file (type jpg)
 <use media/arp_defense.jpg>
-Package pdftex.def Info: media/arp_defense.jpg  used on input line 82.
+Package pdftex.def Info: media/arp_defense.jpg  used on input line 83.
 (pdftex.def)             Requested size: 122.9164pt x 87.13544pt.
+
+Overfull \vbox (8.66394pt too high) detected at line 83
+ []
+
 
 
 [3
@@ -1114,18 +1117,37 @@ Package pdftex.def Info: media/arp_defense.jpg  used on input line 82.
 <media/scan_attack.jpg, id=38, 586.19pt x 409.53pt>
 File: media/scan_attack.jpg Graphic file (type jpg)
 <use media/scan_attack.jpg>
-Package pdftex.def Info: media/scan_attack.jpg  used on input line 113.
+Package pdftex.def Info: media/scan_attack.jpg  used on input line 114.
 (pdftex.def)             Requested size: 122.9164pt x 85.8726pt.
 <media/scan_defense.jpg, id=39, 582.175pt x 366.36874pt>
 File: media/scan_defense.jpg Graphic file (type jpg)
 <use media/scan_defense.jpg>
-Package pdftex.def Info: media/scan_defense.jpg  used on input line 113.
+Package pdftex.def Info: media/scan_defense.jpg  used on input line 114.
 (pdftex.def)             Requested size: 122.9164pt x 77.3478pt.
 
 
 [4
 
  <./media/scan_attack.jpg> <./media/scan_defense.jpg>]
+<media/flood_attack.jpg, id=45, 416.55624pt x 293.095pt>
+File: media/flood_attack.jpg Graphic file (type jpg)
+<use media/flood_attack.jpg>
+Package pdftex.def Info: media/flood_attack.jpg  used on input line 147.
+(pdftex.def)             Requested size: 122.9164pt x 86.48462pt.
+<media/flood_defense.jpg, id=46, 409.53pt x 293.095pt>
+File: media/flood_defense.jpg Graphic file (type jpg)
+<use media/flood_defense.jpg>
+Package pdftex.def Info: media/flood_defense.jpg  used on input line 147.
+(pdftex.def)             Requested size: 122.9164pt x 87.96942pt.
+
+Overfull \vbox (9.49792pt too high) detected at line 147
+ []
+
+
+
+[5
+
+ <./media/flood_attack.jpg> <./media/flood_defense.jpg>]
 \tf@nav=\write6
 \openout6 = `slides.nav'.
 
@@ -1140,21 +1162,14 @@ Package pdftex.def Info: media/scan_defense.jpg  used on input line 113.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-Package rerunfilecheck Warning: File `slides.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `slides.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+Package rerunfilecheck Info: File `slides.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 25550 strings out of 475171
- 507752 string characters out of 5767103
- 870361 words of memory out of 5000000
- 48034 multiletter control sequences out of 15000+600000
+ 25594 strings out of 475171
+ 508522 string characters out of 5767103
+ 870401 words of memory out of 5000000
+ 48068 multiletter control sequences out of 15000+600000
  567093 words of font info for 65 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,13n,123p,1873b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1163,10 +1178,10 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmss9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ssbx10.pfb>
-Output written on slides.pdf (4 pages, 369625 bytes).
+Output written on slides.pdf (5 pages, 440214 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
- 9 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 78 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
