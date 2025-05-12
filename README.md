@@ -1,6 +1,7 @@
 # Mininet
+**Note:** For an easier reading of the report it's advised to access https://github.com/l3un4m/Mininet. No code is shown in the report, only it's explanation and results. Every section and subsection has an hyperlink to the files in question. Additionally there are provided scripts that mimick an attempt of each attack implemented, these can be used to compare what happens before and after implementing the defenses.
 ## Firewalls
-For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** that resulted in the following *pingall*
+For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** for **R1** and an **accept policy** for **R2** that resulted in the following *pingall*:
 ![a](/screenshots/pingall.jpg)
 
 ## DNS Reflection
@@ -35,20 +36,24 @@ As we can see the arp table of the victim remais unchanged.
 ## Network Scan
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we start by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
+
 ![scan](/screenshots/scan1.jpg)
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table to limit the rate of accepted **SYN** packets to **10 per second** and **icmp** to **2 per second** preventing both types of scanning.
 As we can see, when we run the same attack this time it can't see any of our hosts:
+
 ![scan](/screenshots/scan_def.jpg)
 
 ## SYN Flooding
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/flood.py) we simply flood a victim with SYN packets coming from spoofed IP's preventing new connections to be established to the victim.
-![scan](/screenshots/flood1.jpg)
 Here we can see all the spoofed SYN's and SYN-ACK's being sent.
-![scan](/screenshots/flood2.jpg)
+
+![scan](/screenshots/flood1.jpg)
 Here we see the amount of SYN\_RECV's on the **http** server.
+
+![scan](/screenshots/flood2.jpg)
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second.
