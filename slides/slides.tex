@@ -54,6 +54,7 @@
 \begin{columns}
     % Column 1
     \begin{column}{0.5\textwidth}
+        \\
         \Large Attack
         \begin{figure}
             \centering
@@ -107,6 +108,39 @@
             \begin{itemize}[label={}]
                 \item \footnotesize Send ICMP Requests/TCP SYN Packets to all the addresses of a given sub-domain
                 \item \footnotesize Firewall sees that the amount of these type of packets that were received surpasses the threshold so it drops
+            \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Syn Flooding}
+\begin{columns}
+    % Column 1
+    \begin{column}{0.5\textwidth}
+        \Large Attack
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{flood_attack.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Send spoofed TCP SYN packets to a victim's open port
+                \item \footnotesize Victim adds the tcp connections
+                \item \footnotesize Victim sends SYN-ACKS that will never get be answered leaving the connections table full
+            \end{itemize}
+    \end{column}
+    % Column 2
+    \begin{column}{0.5\textwidth}
+        \\
+        \Large Defense
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{flood_defense.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Send spoofed TCP SYN packets to a victim's open port
+                \item \footnotesize Firewall sets a limit of 5 new TCP Connections per second
+                \item \footnotesize Victim might send unanswerable SYN-ACKS but not enough to block new legitimate connections
             \end{itemize}
     \end{column}
 \end{columns}
