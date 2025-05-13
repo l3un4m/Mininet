@@ -9,7 +9,11 @@ For this report it's asked of us to implement firewalls corresponding to what a 
 
 ![a](/screenshots/pingall.jpg)
 
-**Note:** These rules are applied automatically when the topology is launched, for that I simply had to update the topo.py to apply them at "boot".
+**Note:** These rules are applied automatically when the topology is launched, for that I simply had to update the topo.py to apply them at "boot". However for them to be applied they need to be inside the path "/home/student-linfo2347/Mininet/firewall/r**X**.nft" where **X** refers to the router we want. For simplicity you can also just run the two following commands:
+```
+r1 nft -f firewall/r1.nft
+r2 nft -f firewall/r2.nft
+```
 ## Network Scan
 ### Attack
 **Note:** For this attack to be shown we need to have **R1** in our ARP Table so for that simpli ping **WS3** from **R1**
