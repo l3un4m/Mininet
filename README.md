@@ -9,6 +9,25 @@ For this report it's asked of us to implement firewalls corresponding to what a 
 
 ![a](/screenshots/pingall.jpg)
 
+## Network Scan
+### Attack
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we start by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
+```
+[Attacker] python3 attack/scan.py [Victim Subdomain]
+```
+
+![scan](/screenshots/scan1.jpg)
+
+### Defense
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table of **R2** to limit the rate of accepted **SYN** packets to **2 per second** and **icmp** to **2 per second** preventing both types of scanning.
+```
+r2 flush ruleset
+r2 nft -f defense/r2_scan.nft
+```
+As we can see, when we run the same attack this time it can't see any of our hosts:
+
+![scan2](/screenshots/scan_def.jpg)
+**Note:** This attack is very useful since for the next attacks we need to know about what IP's are being used and their open ports!
 ## DNS Reflection
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we know that the DNS port is **5353** so we send a DNS request in the name of the WorkStations so that they get the reply (in the open port 5353) which is bigger than the request sent by the attacker resulting in a DOS if multiplied.
@@ -46,25 +65,6 @@ As we can see the arp table of the victim remais unchanged.
 
 ![arp3](/screenshots/arp_def.jpg)
 
-## Network Scan
-### Attack
-For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we start by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
-```
-[Attacker] python3 attack/scan.py [Victim Subdomain]
-```
-
-![scan](/screenshots/scan1.jpg)
-
-### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table of **R2** to limit the rate of accepted **SYN** packets to **2 per second** and **icmp** to **2 per second** preventing both types of scanning.
-```
-r2 flush ruleset
-r2 nft -f defense/r2_scan.nft
-```
-As we can see, when we run the same attack this time it can't see any of our hosts:
-
-![scan2](/screenshots/scan_def.jpg)
-
 ## SYN Flooding
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/flood.py) we simply flood a victim with SYN packets coming from spoofed IP's preventing new connections to be established to the victim.
@@ -91,8 +91,10 @@ to free up SYN\_RECV entries to ~6-10 seconds with the command:
 ```
 This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
 ## SSH Brute-Force
+**Note:** For this attack we need to download a wordlist but Inginious didn't accept a zip with it because it'd be too big so for simplicity reasons just clone and unzip the following repo: https://github.com/dw0rsec/rockyou.txt.git and add it to the home folder of mininet.
 ### Attack
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) we created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
+
 ![brute](/screenshots/brute.jpg)
 Due to performance issues we couldn't achieve the correct answer but the script seems to be working as it should.
 

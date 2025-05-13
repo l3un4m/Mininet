@@ -18,6 +18,37 @@
 
 
 \begin{frame}
+\frametitle{Network Scan}
+\begin{columns}
+    % Column 1
+    \begin{column}{0.5\textwidth}
+        \Large Attack
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{scan_attack.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Send ICMP Requests to all the addresses of a given sub-domain
+                \item \footnotesize Send TCP SYN packets to all of the found Hosts that responded
+               \item \footnotesize  Save the addresses and their open ports
+            \end{itemize}
+    \end{column}
+    % Column 2
+    \begin{column}{0.5\textwidth}
+        \Large Defense
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{scan_defense.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Send ICMP Requests/TCP SYN Packets to all the addresses of a given sub-domain
+                \item \footnotesize Firewall sees that the amount of these type of packets that were received surpasses the threshold so it drops
+            \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
 \frametitle{Dns Reflection}
 \begin{columns}
     % Column 1
@@ -82,36 +113,6 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}
-\frametitle{Network Scan}
-\begin{columns}
-    % Column 1
-    \begin{column}{0.5\textwidth}
-        \Large Attack
-        \begin{figure}
-            \centering
-            \includegraphics[width=0.8\textwidth]{scan_attack.jpg}\\
-        \end{figure}
-            \begin{itemize}[label={}]
-                \item \footnotesize Send ICMP Requests to all the addresses of a given sub-domain
-                \item \footnotesize Send TCP SYN packets to all of the found Hosts that responded
-               \item \footnotesize  Save the addresses and their open ports
-            \end{itemize}
-    \end{column}
-    % Column 2
-    \begin{column}{0.5\textwidth}
-        \Large Defense
-        \begin{figure}
-            \centering
-            \includegraphics[width=0.8\textwidth]{scan_defense.jpg}\\
-        \end{figure}
-            \begin{itemize}[label={}]
-                \item \footnotesize Send ICMP Requests/TCP SYN Packets to all the addresses of a given sub-domain
-                \item \footnotesize Firewall sees that the amount of these type of packets that were received surpasses the threshold so it drops
-            \end{itemize}
-    \end{column}
-\end{columns}
-\end{frame}
 
 \begin{frame}
 \frametitle{Syn Flooding}
@@ -141,6 +142,38 @@
                 \item \footnotesize Send spoofed TCP SYN packets to a victim's open port
                 \item \footnotesize Firewall sets a limit of 5 new TCP Connections per second
                 \item \footnotesize Victim might send unanswerable SYN-ACKS but not enough to block new legitimate connections
+            \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{SSH Bruteforce}
+\begin{columns}
+    % Column 1
+    \begin{column}{0.5\textwidth}
+        \Large Attack
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{brute_attack.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Try to ssh login with every password in a list
+                \item \footnotesize Eventually find correct credentials
+                \item \footnotesize Login and profit
+            \end{itemize}
+    \end{column}
+    % Column 2
+    \begin{column}{0.5\textwidth}
+        \\~\\
+        \Large Defense
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{brute_defense.jpg}\\
+        \end{figure}
+            \begin{itemize}[label={}]
+                \item \footnotesize Try to ssh login with every password in a list
+                \item \footnotesize Firewall blocks the attempt because it surpasses the threshold
             \end{itemize}
     \end{column}
 \end{columns}
