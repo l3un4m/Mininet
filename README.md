@@ -95,7 +95,7 @@ Here we see the amount of SYN\_RECV's on the **http** server:
 ![flood2](/screenshots/flood2.jpg)
 
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second.
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 2 per second.
 ```
 r2 nft flush ruleset
 r2 nft -f defense/r2_flood.nft
