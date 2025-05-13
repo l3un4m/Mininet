@@ -24,7 +24,7 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we
 ![scan](/screenshots/scan1.jpg)
 
 ### Defense
-**Note:**To visualize this mitigation it's needed to send a ping from **R1** to **WS3** to reset it's ARP Table correctly.
+**Note:** To visualize this mitigation it's needed to send a ping from **R1** to **WS3** to reset it's ARP Table correctly.
 ```
 r1 ping ws3
 ```
