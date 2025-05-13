@@ -9,6 +9,7 @@ For this report it's asked of us to implement firewalls corresponding to what a 
 
 ![a](/screenshots/pingall.jpg)
 
+**Note:** These rules are applied automatically when the topology is launched, for that I simply had to update the topo.py to apply them at "boot".
 ## Network Scan
 ### Attack
 **Note:** For this attack to be shown we need to have **R1** in our ARP Table so for that simpli ping **WS3** from **R1**
