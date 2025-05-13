@@ -11,6 +11,10 @@ For this report it's asked of us to implement firewalls corresponding to what a 
 
 ## Network Scan
 ### Attack
+**Note:** For this attack to be shown we need to have **R1** in our ARP Table so for that simpli ping **WS3** from **R1**
+```
+r1 ping ws3
+```
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we start by sending *ICMP Echo Requests* to every address in the given subnet and saving the ones that reply so that after we send TCP packets with the SYN flag to every port in the addresses that replied and we wait for a TCP response packet with the SYN-ACK flag in order to find open ports in the addresses that we found.
 ```
 [Attacker] python3 attack/scan.py [Victim Subdomain]
@@ -19,9 +23,13 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/scan.py) we
 ![scan](/screenshots/scan1.jpg)
 
 ### Defense
+**Note:**To visualize this mitigation it's needed to send a ping from **R1** to **WS3** to reset it's ARP Table correctly.
+```
+r1 ping ws3
+```
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_scan.nft) we simply insert four rules in the *filter* table of **R2** to limit the rate of accepted **SYN** packets to **2 per second** and **icmp** to **2 per second** preventing both types of scanning.
 ```
-r2 flush ruleset
+r2 nft flush ruleset
 r2 nft -f defense/r2_scan.nft
 ```
 As we can see, when we run the same attack this time it can't see any of our hosts:
@@ -39,12 +47,12 @@ As we can see, a DNS request is being sent with a spoofed IP of WS2(when in real
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_dns.nft) I updated **R2**'s Firewall rules to block any traffic incoming from the internet pretending to be from DMZ or the Workstations:
 ```
-r2 flush ruleset
+r2 nft flush ruleset
 r2 nft -f defense/r2_dns.nft
 ```
 Since this rule only applies to traffic coming from outside the network I also added a [rule](https://github.com/l3un4m/Mininet/blob/main/defense/r1_dns.nft) that limits the rate of received dns packets to 5 per second so that if hosts inside DMZ are compromised they can't be used to perform a DNS Reflection that would cause DOS.
 ```
-r1 flush ruleset
+r1 nft flush ruleset
 r1 nft -f defense/r1_dns.nft
 ```
 
@@ -84,7 +92,7 @@ Here we see the amount of SYN\_RECV's on the **http** server:
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_flood.nft) we simply insert two rules in the *filter* table to limit the rate of accepted **SYN** packets to 5 per second.
 ```
-r2 flush ruleset
+r2 nft flush ruleset
 r2 nft -f defense/r2_flood.nft
 ```
 
@@ -101,11 +109,12 @@ This means that clients with a slower connection might failt to start a tcp conn
 For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) I created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
 
 ![brute](/screenshots/brute.jpg)
+
 Due to performance issues I couldn't achieve the correct answer but the script seems to be working as it should.
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_brute.nft) we simply redo **R2**'s firewall rules to include a threshold of 5 New SSH packets per second slowing down our opponent drastically enough to make the attack unfeasable.
 ```
-r2 flush ruleset
+r2 nft flush ruleset
 r2 nft -f defense/r2_brute.nft
 ```

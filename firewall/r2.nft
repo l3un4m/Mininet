@@ -2,10 +2,11 @@ table ip filter {
     chain forward {
         type filter hook forward priority 0; policy accept;
 
-        #Accept ongoing traffic
+        #Basic enterprise Protection
         ip saddr 10.1.0.0/24 accept
         ip saddr 10.2.0.0/24 ip daddr 10.12.0.0/24 ct state new accept
         ip saddr 10.12.0.0/24 ct state new drop
+        #Accept ongoing traffic
         ct state established, related accept
     }
 }

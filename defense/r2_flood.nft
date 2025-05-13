@@ -8,16 +8,17 @@ table ip filter {
 
         # SYN flood protection - limit SYNs per source IP
 
-        tcp flags syn ct state new limit rate 5/second counter accept
+        tcp flags syn ct state new limit rate 1/second counter accept
         tcp flags syn ct state new log prefix "SYN_DROP: " counter drop
         tcp flags syn ct state new drop
+
         # Trusted LAN access
         ip saddr 10.1.0.0/24 accept
 
         # Block DMZ from initiating connections
         ip saddr 10.12.0.0/24 ct state new drop
 
-        # Allow new connections from Internet to DMZ (already rate-limited above)
+        # Allow new connections from Internet to DMZ
         ip saddr 10.2.0.0/24 ip daddr 10.12.0.0/24 ct state new accept
     }
 }
