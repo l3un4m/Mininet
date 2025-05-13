@@ -42,6 +42,11 @@ For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_dns
 r2 flush ruleset
 r2 nft -f defense/r2_dns.nft
 ```
+Since this rule only applies to traffic coming from outside the network I also added a [rule](https://github.com/l3un4m/Mininet/blob/main/defense/r1_dns.nft) that limits the rate of received dns packets to 5 per second so that if hosts inside DMZ are compromised they can't be used to perform a DNS Reflection that would cause DOS.
+```
+r1 flush ruleset
+r1 nft -f defense/r1_dns.nft
+```
 
 ![dns\_def](/screenshots/dns_def.jpg)
 
