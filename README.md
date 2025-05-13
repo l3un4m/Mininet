@@ -37,13 +37,18 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ![dns](/screenshots/dns.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/dns.nft) we created an *nft script* that will allow legitimate DNS traffic and block all the rest that would be spoofed traffic, to install it we use:
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_dns.nft) we updated **R2**'s Firewall rules to block any traffic incoming from the internet pretending to be from DMZ or the Workstations:
 ```
-dns nft -f defense/dns.nft
+r2 flush ruleset
+r2 nft -f defense/r2_dns.nft
+```
+Since this rule only applies to traffic coming from outside the network I also added a [rule](https://github.com/l3un4m/Mininet/blob/main/defense/r1_dns.nft) that limits the rate of received dns packets to 5 per second so that if hosts inside DMZ are compromised they can't be used to perform a DNS Reflection that would cause DOS.
+```
+r1 flush ruleset
+r1 nft -f defense/r1_dns.nft
 ```
 
 ![dns\_def](/screenshots/dns_def.jpg)
-As we can see in the traffic capture we only have DNS Queries, opposed to the previous capture, meaning that our victim's are protected.
 
 ## ARP Poisoning
 ### Attack

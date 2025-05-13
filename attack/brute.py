@@ -44,7 +44,7 @@ def main():
     port = 22
 
     # Read usernames from a file
-    users = 'root'
+    users = 'mininet'
 
     # Read passwords from a file
     passwords = open('rockyou.txt', 'r', encoding='latin-1').readlines()

@@ -1,0 +1,15 @@
+table ip filter {
+    chain forward {
+        type filter hook forward priority 0; policy drop;
+
+        #Let the workstations start any connection
+        ip saddr 10.1.0.0/24 accept
+
+        # Limit outgoing DNS replies to 5 per second total
+        udp sport 5353 limit rate 5/second accept
+
+        #Accept ongoing traffic
+        ct state established, related accept
+    }
+}
+
