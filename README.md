@@ -5,7 +5,7 @@ Additionally there are provided scripts that mimick an attempt of each attack im
 source examples/[desired_attack].sh
 ```
 ## Firewalls
-For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so we added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** for **R1** and an **accept policy** for **R2** that resulted in the following *pingall*:
+For this report it's asked of us to implement firewalls corresponding to what a normal enterprise network would look like so I added *nft rules* for [**R1**](https://github.com/l3un4m/Mininet/blob/main/firewall/r1.nft) and for [**R2**](https://github.com/l3un4m/Mininet/blob/main/firewall/r2.nft) with a **drop policy** for **R1** and an **accept policy** for **R2** that resulted in the following *pingall*:
 
 ![a](/screenshots/pingall.jpg)
 
@@ -37,7 +37,7 @@ For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/dns.py) we 
 ![dns](/screenshots/dns.jpg)
 As we can see, a DNS request is being sent with a spoofed IP of WS2(when in reality it comes from internet) and the response is bigger than the request meaning that it's profitable bandwithwise.
 ### Defense
-For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_dns.nft) we updated **R2**'s Firewall rules to block any traffic incoming from the internet pretending to be from DMZ or the Workstations:
+For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_dns.nft) I updated **R2**'s Firewall rules to block any traffic incoming from the internet pretending to be from DMZ or the Workstations:
 ```
 r2 flush ruleset
 r2 nft -f defense/r2_dns.nft
@@ -89,19 +89,19 @@ r2 nft -f defense/r2_flood.nft
 ```
 
 ![flood3](/screenshots/flood_def.jpg)
-We can see in the previous figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition we changed the default wait time of ~60 seconds
+We can see in the previous figure that we still have **45** SYN\_REC but when looking at the amount of dropped packets we see a number of **400** packets that were dropped by our new firewall rule meaning that it doesn't erase the issue but impossibilitates it from filling our SYN\_RECV entry table. As an addition I changed the default wait time of ~60 seconds
 to free up SYN\_RECV entries to ~6-10 seconds with the command:
 ```
 [Victim Host] sysctl -w net.ipv4.tcp_synack_retries=2
 ```
-This means that clients with a slower connection might failt to start a tcp connection but it's what we consider to be the best solution in the presence of an attack like this.
+This means that clients with a slower connection might failt to start a tcp connection but it's what I consider to be the best solution in the presence of an attack like this.
 ## SSH Brute-Force
 **Note:** For this attack we need to download a wordlist but Inginious didn't accept a zip with it because it'd be too big so for simplicity reasons just clone and unzip the following repo: https://github.com/dw0rsec/rockyou.txt.git and add it to the home folder of mininet.
 ### Attack
-For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) we created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
+For this [attack](https://github.com/l3un4m/Mininet/blob/main/attack/brute.py) I created a simple python for loop that will try every password from a given password list (rockyou.txt in this case) until it finds the correct credentials.
 
 ![brute](/screenshots/brute.jpg)
-Due to performance issues we couldn't achieve the correct answer but the script seems to be working as it should.
+Due to performance issues I couldn't achieve the correct answer but the script seems to be working as it should.
 
 ### Defense
 For this [mitigation](https://github.com/l3un4m/Mininet/blob/main/defense/r2_brute.nft) we simply redo **R2**'s firewall rules to include a threshold of 5 New SSH packets per second slowing down our opponent drastically enough to make the attack unfeasable.
